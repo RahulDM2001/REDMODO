@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>teacher</title>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <style>
+    body{
+      background-image: url("https://i.ibb.co/dcyKtBS/image.png");
+    }
+    a{
+      text-decoration: none;
+      position: absolute;
+      top: 20px;
+      left: 1250px; 
+    }
+  </style>
+</head>
+  <body>
+    <div id="mydiv"></div>
+    <a href="/"><button>LogOut</button></a>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/babel" >
+      class Products extends React.Component {
+
+state={
+  Ques_no:0,
+  body:'',
+  questions:[],
+  answers:[]
+};
+
+ componentDidMount=()=>{
+  this.getBlogPost();
+}
+
+getBlogPost=()=>{
+  axios.get("/home/teacher/info").then((data)=>{
+      this.setState({answers:data.data});
+      console.log('Data has been received');
+  }).catch((err)=>{
+          alert("error retrieving data")
+  });
+
+  axios.get("/home/student/info").then((data)=>{
+    this.setState({questions:data.data});
+    console.log('Data has been received');
+  }).catch((err)=>{
+          alert("error retrieving data")
+  });
+}
+
+handleChange=({target})=>{
+  const {name,value}=target;
+  this.setState({
+    [name]:value
+  });
+  console.log("hi");
+};
+
+displayQuestions=(posts)=>{
+  const blog_post_display = {
+    border: "1px solid white",
+    margin: "10px",
+    padding: "17px",
+    background: "#e9cbd0d2"
+};
+  if(!posts.length)return <h4>No available questions, kindly post the questions to send</h4>;
+
+  return posts.map((post,index)=>(
+    <div style={blog_post_display} className='blog-post_display'>
+    <div key={index}>
+    <b style={{fontSize: "17px"}}>{post.Ques_no}. </b>
+    <span>{post.body}</span>
+    </div>
+  </div>
+  ));
+};
+displayAnswers=(posts)=>{
+  const blog_post_display = {
+    border: "1px solid white",
+    margin: "10px",
+    padding: "17px",
+    paddingBottom: "0px",
+    background: "#e9cbd0d2"
+};
+  if(!posts.length)return <h4>No available answers</h4>;
+
+  return posts.map((post,index)=>(
+    
+      <div key={index} style={blog_post_display} className='blog-post_display'>
+        <b style={{fontSize: "17px"}}>Question{post.Ques_no}</b><br />
+        <p>{post.title} <br />
+          {post.body}</p>
+      </div>
+    
+  ));
+};
+render(){
+  console.log('State: ',this.state);
+const form_input = {
+    margin: "20px",
+    display: "flex"
+};
+const caution = {
+    color: "rgb(236, 203, 11)"
+};
+const button = {
+    marginLeft: "10px",
+    marginBottom: "20px",
+    display: "flex",
+    background: "#007bff",
+    color: "#fff",
+    cursor: "pointer",
+    borderRadius: "0.25rem",
+    lineHeight: "1.5",
+    fontSize: "1rem",
+    outline: "none"
+};
+  return(
+    <div className='app'>
+    <h1>Frame Questions</h1>
+    <form action="/home/teacher" method="POST">
+      <div className="form-input" style={form_input}>
+        <input
+        type="number"
+        name="Ques_no"
+        placeholder="Question Number"
+        onChange={this.handleChange}
+        required=""
+        />
+      </div>
+      <div className="form-input" style={form_input}>
+        <textarea placeholder="Question" name="body" cols="100" rows="10" required="" value={this.state.body} onChange={this.handleChange}></textarea>
+      </div>
+      <h5 className="caution" style={caution}>*Once submitted, question can not be modified.</h5>
+      <button style={button} className="form-submit">Submit</button>
+    </form>
+    <div className="blog-post">
+      <h2>Questions:</h2>
+        {this.displayQuestions(this.state.questions)}
+      </div>
+      <h2>Answers:</h2>
+      {this.displayAnswers(this.state.answers)}
+    </div>
+  )
+}
+}
+      ReactDOM.render(<Products />, document.getElementById('mydiv'));
+    </script>
+  </body>
+</html>

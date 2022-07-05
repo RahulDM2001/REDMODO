@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>REDMODO</title>
+  <style>
+body{
+    background-image:linear-gradient(to bottom right, rgba(97, 60, 231, 0.925) 30%, white);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family:'Comic Sans MS';
+  }
+  body a{
+    color: rgb(204, 50, 50);
+    text-decoration: none;
+    font-family:'Comic Sans MS';
+  }
+  .login-form-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1000px;
+      height: 540px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0px 0px 47px 0px rgba(2, 2, 2, 0.47);
+      margin-top: 45px;
+      background: #fff;
+  }
+  .welcome-text p {
+      font-size: 17px;
+  }
+  .left-section{
+    width: 450px;
+    height: 540px;
+    float:left;
+  }
+  .right-section {
+      width: 550px;
+      position: relative;
+      height: 100vh;
+      float: right;
+      background-image: url(https://image.freepik.com/free-vector/halftone-dotted-pattern-background-template_1164-2031.jpg);
+      background-size: cover;
+      background-position: 570px 0px;
+      object-fit: cover;
+  }
+  .welcome-text {
+      position: absolute;
+      max-width: 290px;
+      font-size:25px;
+      text-align: center;
+      top: 50%;
+      right: 130px;
+      color: #fff;
+      transform: translateY(-50%);
+  }
+  .title {
+      text-align: center;
+      margin-top: 80px;
+      color: #292929;
+      margin-bottom: 10px;
+  }
+  .title #h{
+	  margin-bottom: 40px;
+	  margin-top: 20px;
+  }
+  .msg{
+    color: red;
+    font-size: 12px;
+    display: none;
+  }
+  .form {
+      max-width: 260px;
+      margin: 0 auto;
+      text-align: center;
+  }
+  .form input[type=text],input[type=password] {
+      width: 300px;
+      padding: 14px 12px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      outline: none;
+      box-shadow: 0px 0px 42px #8b8bb8;
+  }
+  .form input[type="submit"] {
+      display: inline-block;
+      border: none;
+      width: 170px;
+      padding: 12px;
+      background-color: rgb(204, 50, 50);
+      color: #fff;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 400;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      margin: 20px 0px;
+      transition: 0.3s all ease-in-out;
+      font-family: 'Comic Sans MS';
+  }
+  .form input[type="submit"]:focus {
+    outline: none;
+  }
+  .form input[type="submit"]:hover {
+    background: rgb(73, 0, 245);
+    width: 190px;
+  }
+  .create-account {
+      font-weight: 500;
+      font-size: 15px;
+      color: #424242;
+      margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="login-form-wrap">
+    <div class="left-section">
+      <div class="title">
+        <h1>RedMoDo!</h1>
+        <p id="h">sign in to your account!</p>
+        <p class="msg">Invalid Username or Password!!!</p>
+      </div>
+      <div class="form">
+        <form class="" action="/home" method="post">
+          <input type="text" placeholder="Username or Email" name='usnm' required="">
+          <input type="password" placeholder="Password" name='pass' required="">
+          <input type="submit" value="Sign In">
+        </form>
+        <div class="create-account">
+          Don,t have an Account? <a href="/signup">Create</a>
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="welcome-text">
+        <h1>Welcome</h1>
+        <p>Hi this is redmodo. Please login to your account if exists or create one to access the application</p>
+      </div>
+    </div>
+  </div>
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+<script type="text/javascript">
+if(<%= bool %>){ 
+    $(".msg").show();
+    $("input[type=text]").focus((e)=>{
+      $(".msg").hide();
+    });
+    $("input[type=password]").focus((e)=>{
+      $(".msg").hide();
+    });
+}
+</script>
+</body>
+</html>

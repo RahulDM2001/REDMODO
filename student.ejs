@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student</title>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <style>
+    body{
+      background-image: url("https://i.ibb.co/dcyKtBS/image.png");
+    }
+    a{
+      text-decoration: none;
+      position: absolute;
+      top: 20px;
+      left: 1250px; 
+    }
+  </style>
+</head>
+    <body>
+    <div id="mydiv"></div>
+    <a href="/"><button>LogOut</button></a>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/babel" >
+class Contact extends React.Component {
+    
+    state={
+        Ques_no: 0,
+        title:'',
+        body:'',
+        posts:[]
+      };
+    
+      componentDidMount=()=>{
+        this.getBlogPost();
+      }
+    
+      getBlogPost=()=>{
+        axios.get("/home/student/info").then((data)=>{
+          this.setState({posts:data.data});
+          console.log('Data has been received');
+      }).catch((err)=>{
+          alert("error retrieving data");
+      });
+    }
+    
+      handleChange=({target})=>{
+        const {name,value}=target;
+        this.setState({
+          [name]:value
+        });
+      };
+
+      displayBlogPost=(posts)=>{
+        const section = {
+          border: "1px solid white",
+          padding: "15px",
+          background: "#e9cbd0d2"
+        };
+        const form = {
+          padding: "10px"
+        };
+        if(!posts.length)return <h4>No questions available</h4>;
+    
+        return posts.map((post,index)=>(
+        <div key={index} className='blog-post_display'>
+          <div style={section}>
+            <b style={{fontSize: "20px"}}>{post.Ques_no}. </b>
+            <span>{post.body}</span>
+          </div>
+          <form action="/home/student" onSubmit={this.submit} method="POST" style={form}>
+              <input type="number" placeholder="Question Number" required="" value={post.Ques_no}name="Ques_no" onChange={this.handleChange} /> <br />
+              <textarea
+              name="title"
+              cols="60"
+              rows="1"
+              placeholder="Name/RollNumber/Section"
+              required=""
+              onChange={this.handleChange}
+              style={{marginTop: "5px"}}
+              /><br />
+            <textarea placeholder="Answer" name="body" cols="100" rows="10" required="" onChange={this.handleChange}></textarea><br />
+            <button className="form-submit">Submit</button>
+            </form>
+          </div>
+        ));
+      };
+      render(){
+        console.log('State: ',this.state);
+        return(<div className='app'>
+          <h1>Questions</h1>
+          <div className="blog-post">
+            {this.displayBlogPost(this.state.posts)}
+          </div>
+        </div>
+        )
+      }
+    }
+      ReactDOM.render(<Contact />, document.getElementById('mydiv'));
+    </script>
+  </body>
+</html>

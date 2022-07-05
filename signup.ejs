@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>signup</title>
+<style type="text/css">
+body{	
+	background-image: url(https://i.pinimg.com/originals/cd/4b/54/cd4b54e4ac2950d1e18dffe5f056a625.jpg);
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-position: fixed;
+	font-family: "Comic Sans MS";
+    } 
+	::placeholder{
+		color:white;
+	}
+form{
+    padding: 30px;
+}
+.s1{
+	width: 280px;
+	background-image: linear-gradient(to left,rgba(2, 217, 255, 0.808) 10%, rgba(162, 0, 255, 0.774));
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-position: fixed;
+	top: 50%;
+	left: 60%;
+	position: absolute;
+	transform: translate(-50%,-50%);
+    display:inline-block;
+    }
+.s2{
+    display: flex;
+    margin-bottom: 0px;
+	
+}
+.s2 button{
+    padding: 10px;
+    width:50%;
+    text-align: center;
+    font-size: 26px;
+	outline: none;
+	border: none;
+	font-family: "Comic Sans MS";
+} 
+.t2{
+	background: none;
+}
+.s2 .t2:hover{
+    background-color: rgba(255, 255, 255, 0.37);
+}
+.s2 .t1{
+    border-right: 2px solid rgb(228, 223, 223);
+	background-color: rgba(255, 0, 128, 0.842);
+}
+
+form input[type=text],[type=email],[type=password]{
+    background: none;
+	border: 1.5px solid #ffffff;
+	font-size: 21px;
+	outline: none;
+	color: black;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-bottom: 25px;
+    width:90%;
+}
+form input[type=submit]{
+	outline: none;
+	background-color: #f5f85a;
+	background-attachment: fixed;
+	font-size: 21px;
+    font-family: "Comic Sans MS";
+	width: 47%;
+	border: none;
+    text-align: center;
+	color: #010515;
+	border-radius: 12px;
+	transition: 0.5s;
+	padding: 5px 10px;
+  }
+form input[type=submit]:hover{
+	background-color: #eeff00ef;
+	width: 57%;
+        }
+.s4{
+	display: none;
+}
+#msg{
+	color: red;
+	font-size: 16px;
+	margin-left: 30px;
+	margin-top: -10px;
+	display: none;
+}
+</style>
+
+</head>
+<body>
+<div class="s1">
+<div class="s2"> 
+<button class="t1">Student</button>
+<button class="t2">Teacher</button>
+</div>
+<form class="s3" method="post" action="\signup">
+<input type="text" placeholder="Username" name="usnm" required="" >
+<input type="email" placeholder="email" name="Email">
+<input type="password" placeholder="Password"  name="pass" id="pas1" required="">
+<input type="password" placeholder="Confirm Password"  name="cpass" required="">
+<input type="submit" class="j" value="Register">
+</form>
+<form class="s4" method="post" action="\signup">
+	<input type="email" placeholder="email" name="Email" id="e2" required="">
+	<input type="password" placeholder="Password"  name="pass" id="pas2" required="">
+	<input type="password" placeholder="Confirm Password"  name="cpass" required="">
+	<input type="submit" class="j" value="Register">
+</form>
+<p id="msg"></p>
+</div>
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+<script type="text/javascript">	
+	$(".t2").click((event)=>{
+		$(".t1").css("background", "none");
+		$(".t2").css("background", "rgba(255, 0, 128, 0.842)");
+		$(".s3").hide(1000);
+		$(".s4").show(1000);
+		});
+	$(".t1").click((event)=>{
+		$(".t2").css("background", "none");
+		$(".t1").css("background", "rgba(255, 0, 128, 0.842)");
+		$(".s3").show(1000);
+		$(".s4").hide(1000);
+		});
+if(<%= t %>){
+	
+	$(".t1").css("background", "none");
+	$(".t2").css("background", "rgba(255, 0, 128, 0.842)");
+	$(".s3").hide();
+	$(".s4").show();
+	var pas=$("#pas2");
+	var usm=$("#e2");
+}
+if(<%= s %>){
+	$(".t2").css("background", "none");
+	$(".t1").css("background", "rgba(255, 0, 128, 0.842)");
+	$(".s3").show();
+	$(".s4").hide();
+	var pas=$("#pas1");
+	var usm=$("input[type=text]");
+}
+if(<%= boo %>){
+			$("#msg").text("Password not matched!!!");
+			$("#msg").show();
+			pas.focus((e)=>{
+				$("#msg").hide();
+			});
+	}
+if(<%= foo %>){
+			$("#msg").text("Username or email already exists!!!");
+			$("#msg").show();
+			usm.focus((e)=>{
+				$("#msg").hide();
+			});
+	}
+</script>
+</body>
+</html>
